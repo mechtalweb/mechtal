@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>MECHTAL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg">
+  <div class="blob blue"></div>
+  <div class="blob red"></div>
+</div>
+
+<nav class="nav">
+  <div class="nav-left" onclick="goHome()">MECHTAL</div>
+
+  <div class="nav-center">
+    <div class="nav-item"
+      onmouseenter="openMenu()"
+      onmouseleave="closeMenuDelayed()">
+      Polonia Bytom ▾
+      <div class="mega-menu" id="megaMenu"
+        onmouseenter="cancelClose()"
+        onmouseleave="closeMenu()">
+        <div onclick="openMatches()">🏟 Najbliższe mecze</div>
+        <div onclick="openTable()">📊 Tabela</div>
+      </div>
+    </div>
+    <span onclick="openGiveaway()">🎁 Giveaway</span>
+    <span onclick="openDiscord()">💬 Discord</span>
+  </div>
+
+  <div class="nav-right" id="navAuth">
+    <button class="btn" onclick="openLogin()">Zaloguj</button>
+    <button class="btn secondary" onclick="openRegister()">Rejestracja</button>
+  </div>
+
+  <div class="nav-right hidden" id="navProfile">
+    <div class="profile-nav" onclick="toggleProfileMenu()">
+      <div id="navAvatar" class="avatar-circle"></div>
+      <span id="navNick"></span>
+    </div>
+    <div class="profile-dropdown hidden" id="profileDropdown">
+      <div onclick="openProfile()">⚙ Ustawienia profilu</div>
+      <div onclick="logout()">🚪 Wyloguj</div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1 class="glow">MECHTAL</h1>
+  <p>Community kibiców Polonii Bytom</p>
+
+  <div class="cards">
+    <div class="card">🔵🔴 Polonia Bytom</div>
+    <div class="card">👥 Społeczność</div>
+    <div class="card">🎁 Giveaway</div>
+  </div>
+</section>
+
+<div id="toast"><span id="toastText"></span></div>
+
+<!-- LOADING -->
+<div class="modal hidden" id="loadingModal">
+  <div class="modal-box center animate">
+    <div class="loader"></div>
+    <p id="loadingText">Ładowanie...</p>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="modal hidden" id="loginModal">
+  <div class="modal-box animate">
+    <h2>Logowanie</h2>
+    <input id="loginUser" placeholder="Login">
+    <input id="loginPass" type="password" placeholder="Hasło">
+    <button class="btn" onclick="login()">Zaloguj</button>
+  </div>
+</div>
+
+<!-- REGISTER -->
+<div class="modal hidden" id="registerModal">
+  <div class="modal-box animate">
+    <h2>Rejestracja</h2>
+    <input id="regUser" placeholder="Login">
+    <input id="regPass" type="password" placeholder="Hasło">
+    <button class="btn" onclick="register()">Utwórz konto</button>
+  </div>
+</div>
+
+<!-- PROFILE -->
+<div class="modal hidden" id="profileModal">
+  <div class="modal-box wide animate">
+    <h2>Profil użytkownika</h2>
+
+    <div class="profile-grid">
+      <div>
+        <div id="avatarPreview" class="avatar-large"></div>
+        <button class="btn secondary" onclick="avatarInput.click()">Zmień avatar</button>
+        <input type="file" id="avatarInput" hidden accept="image/*" onchange="uploadAvatar(event)">
+      </div>
+
+      <div>
+        <label>Nazwa wyświetlana</label>
+        <input id="displayName">
+
+        <label>Bio</label>
+        <textarea id="bio"></textarea>
+
+        <button class="btn" onclick="saveProfile()">Zapisz</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GIVEAWAY -->
+<div class="modal hidden" id="giveawayModal">
+  <div class="modal-box wide center animate">
+    <h2>🎁 Giveaway – Discord Nitro Boost (1M)</h2>
+    <div class="counter">
+      <span id="giveCounter">0</span>
+      <small>zgłoszeń</small>
+    </div>
+    <button class="btn" onclick="tryJoinGiveaway()">Weź udział</button>
+  </div>
+</div>
+
+<div class="modal hidden" id="giveawayFormModal">
+  <div class="modal-box wide animate">
+    <input id="discordId" placeholder="Discord ID">
+    <textarea id="opinion" placeholder="Twoja opinia"></textarea>
+    <button class="btn" onclick="submitGiveaway()">Wyślij</button>
+  </div>
+</div>
+
+<!-- MATCHES -->
+<div class="modal hidden" id="matchesModal">
+  <div class="modal-box wide animate">
+    <h2>🏟 Najbliższe mecze</h2>
+    <ul class="list">
+      <li>27.12 – Polonia Bytom vs GKS Katowice</li>
+      <li>03.01 – Ruch Chorzów vs Polonia Bytom</li>
+      <li>10.01 – Polonia Bytom vs Wisła Kraków</li>
+    </ul>
+  </div>
+</div>
+
+<!-- TABLE -->
+<div class="modal hidden" id="tableModal">
+  <div class="modal-box wide animate">
+    <h2>📊 Tabela ligowa</h2>
+    <ol class="list">
+      <li>Wisła Kraków</li>
+      <li>Polonia Bytom</li>
+      <li>GKS Katowice</li>
+    </ol>
+  </div>
+</div>
+<!-- CHAT -->
+<div id="chatToggle" onclick="toggleChat()">💬</div>
+
+<div id="chatBox" class="hidden">
+  <div class="chat-header">MECHTAL Chat</div>
+  <div id="chatMessages"></div>
+  <input
+    id="chatInput"
+    placeholder="Zaloguj się aby pisać"
+    onkeydown="sendChat(event)"
+  >
+</div>
+
+
+<script src="app.js"></script>
+</body>
+</html>
